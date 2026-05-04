@@ -6,6 +6,7 @@ import 'package:movewell/core/widgets/header_background.dart';
 import 'package:movewell/core/models/mock_data.dart';
 import 'package:movewell/core/features/auth/providers/auth_provider.dart';
 import 'package:movewell/core/features/auth/screens/welcome_screen.dart';
+import 'package:movewell/core/features/doctor_dashboard/screens/doctor_working_hours_screen.dart';
 
 class DoctorProfileSettingsScreen extends StatelessWidget {
   const DoctorProfileSettingsScreen({super.key});
@@ -165,7 +166,14 @@ class DoctorProfileSettingsScreen extends StatelessWidget {
                           _buildSettingsOption(
                             icon: Icons.schedule_outlined,
                             title: 'Working Hours',
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const DoctorWorkingHoursScreen(),
+                                ),
+                              );
+                            },
                           ),
                           _buildSettingsOption(
                             icon: Icons.notifications_outlined,
