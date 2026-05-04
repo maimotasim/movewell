@@ -371,33 +371,14 @@ class _DoctorQrScannerScreenState extends State<DoctorQrScannerScreen> {
 
         return Stack(
           children: [
-            // Semi-transparent overlay
-            ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                Colors.black.withValues(alpha: 0.5),
-                BlendMode.srcOut,
-              ),
-              child: Stack(
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.black,
-                      backgroundBlendMode: BlendMode.dstOut,
-                    ),
-                  ),
-                  Positioned(
-                    left: left,
-                    top: top,
-                    child: Container(
-                      width: scanSize,
-                      height: scanSize,
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                    ),
-                  ),
-                ],
+            // Semi-transparent overlay with cutout
+            CustomPaint(
+              size: Size(constraints.maxWidth, constraints.maxHeight),
+              painter: _OverlayPainter(
+                scanRect: RRect.fromRectAndRadius(
+                  Rect.fromLTWH(left, top, scanSize, scanSize),
+                  const Radius.circular(24),
+                ),
               ),
             ),
             // Corner decorations
@@ -485,6 +466,36 @@ class _CornerPainter extends CustomPainter {
     }
 
     canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _OverlayPainter extends CustomPainter {
+  final RRect scanRect;
+
+  _OverlayPainter({required this.scanRect});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = Colors.black.withValues(alpha: 0.5);
+
+    // Full screen path
+    final fullPath = Path()
+      ..addRect(Rect.fromLTWH(0, 0, size.width, size.height));
+
+    // Cutout path (the scan area)
+    final cutoutPath = Path()..addRRect(scanRect);
+
+    // Combine: full screen minus the cutout
+    final overlayPath = Path.combine(
+      PathOperation.difference,
+      fullPath,
+      cutoutPath,
+    );
+
+    canvas.drawPath(overlayPath, paint);
   }
 
   @override

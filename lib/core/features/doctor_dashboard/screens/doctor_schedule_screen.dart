@@ -68,7 +68,7 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
 
             // Date selector
             SizedBox(
-              height: 90,
+              height: 95,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -97,6 +97,7 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             day['day']!,
@@ -267,6 +268,7 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
             SizedBox(
               width: 60,
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
                     slot.time.split(' ')[0],
