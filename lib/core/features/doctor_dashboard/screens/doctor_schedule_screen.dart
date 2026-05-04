@@ -73,7 +73,7 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 itemCount: _weekDays.length,
-                separatorBuilder: (_, __) => const SizedBox(width: 12),
+                separatorBuilder: (_, _) => const SizedBox(width: 12),
                 itemBuilder: (context, index) {
                   final day = _weekDays[index];
                   final isSelected = index == _selectedDayIndex;
@@ -148,7 +148,7 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
                   : ListView.separated(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       itemCount: _slotsForSelectedDay.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 0),
+                      separatorBuilder: (_, _) => const SizedBox(height: 0),
                       itemBuilder: (context, index) {
                         return _buildTimelineSlot(
                           _slotsForSelectedDay[index],

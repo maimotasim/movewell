@@ -154,7 +154,7 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 itemCount: _filters.length,
-                separatorBuilder: (_, __) => const SizedBox(width: 8),
+                separatorBuilder: (_, _) => const SizedBox(width: 8),
                 itemBuilder: (context, index) {
                   final filter = _filters[index];
                   final isSelected = filter == _selectedFilter;
@@ -219,7 +219,7 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
                   : ListView.separated(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       itemCount: _filteredPatients.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 12),
+                      separatorBuilder: (_, _) => const SizedBox(height: 12),
                       itemBuilder: (context, index) {
                         return _buildPatientCard(_filteredPatients[index]);
                       },

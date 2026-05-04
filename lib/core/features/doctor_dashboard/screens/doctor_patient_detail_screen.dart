@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movewell/core/theme/colors.dart';
 import 'package:movewell/core/widgets/header_background.dart';
 import 'package:movewell/core/models/mock_data.dart';
+import 'package:movewell/core/features/video_session/screens/waiting_room_screen.dart';
+import 'package:movewell/core/services/agora_service.dart';
 
 class DoctorPatientDetailScreen extends StatefulWidget {
   final DoctorPatientModel patient;
@@ -879,10 +881,14 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
                   child: ElevatedButton.icon(
                     onPressed: () {
                       Navigator.pop(ctx);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Connecting to ${patient.name}...'),
-                          backgroundColor: const Color(0xFF6C63FF),
+                      final channelName = AgoraService.channelForAppointment(patient.id);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => WaitingRoomScreen(
+                            channelName: channelName,
+                            remoteName: patient.name,
+                          ),
                         ),
                       );
                     },

@@ -28,15 +28,17 @@ class _SplashScreenState extends State<SplashScreen> {
     
     if (!mounted) return;
 
+    final nav = Navigator.of(context);
+    final authProvider = context.read<AuthProvider>();
+
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('auth_token');
 
     if (token != null && token.isNotEmpty) {
       // Load the saved role
-      final role = await context.read<AuthProvider>().getSavedRole();
+      final role = await authProvider.getSavedRole();
       if (!mounted) return;
-      Navigator.pushReplacement(
-        context,
+      nav.pushReplacement(
         MaterialPageRoute(
           builder: (_) => role == 'doctor'
               ? const DoctorDashboardScreen()
@@ -45,8 +47,8 @@ class _SplashScreenState extends State<SplashScreen> {
       );
     } else {
       // lw mafeesh token proceed to onboarding
-      Navigator.pushReplacement(
-        context,
+      if (!mounted) return;
+      nav.pushReplacement(
         MaterialPageRoute(builder: (_) => const WelcomeScreen()),
       );
     }

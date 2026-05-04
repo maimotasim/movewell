@@ -1,18 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:movewell/core/theme/colors.dart';
+import 'package:movewell/core/services/agora_service.dart';
 import 'package:movewell/core/features/video_session/screens/video_session_screen.dart';
 
 class WaitingRoomScreen extends StatefulWidget {
-  const WaitingRoomScreen({super.key});
+  final String channelName;
+  final String remoteName; // e.g. doctor or patient name
+
+  const WaitingRoomScreen({
+    super.key,
+    required this.channelName,
+    this.remoteName = 'your therapist',
+  });
 
   @override
   State<WaitingRoomScreen> createState() => _WaitingRoomScreenState();
 }
 
 class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
+  final AgoraService _agora = AgoraService();
   bool _isMicOn = true;
   bool _isCamOn = true;
+  bool _isInitializing = true;
+  bool _permissionDenied = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initAgora();
+  }
+
+  Future<void> _initAgora() async {
+    // Request permissions
+    final granted = await _agora.requestPermissions();
+    if (!granted) {
+      if (mounted) {
+        setState(() {
+          _permissionDenied = true;
+          _isInitializing = false;
+        });
+      }
+      return;
+    }
+
+    // Initialize engine & start local preview
+    await _agora.initialize();
+
+    if (mounted) {
+      setState(() => _isInitializing = false);
+    }
+  }
+
+  @override
+  void dispose() {
+    // Don't dispose the engine here — we pass it to the video session screen
+    super.dispose();
+  }
+
+  void _joinCall() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => VideoSessionScreen(
+          channelName: widget.channelName,
+          remoteName: widget.remoteName,
+          initialMicOn: _isMicOn,
+          initialCamOn: _isCamOn,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,13 +88,16 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () {
+                      _agora.dispose();
+                      Navigator.pop(context);
+                    },
                     child: const Icon(Icons.close_rounded, color: Colors.white, size: 28),
                   ),
                 ],
               ),
             ),
-            
+
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -51,15 +114,15 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Dr. Sara Medhat is in the waiting room.',
+                      '${widget.remoteName} is waiting.',
                       style: GoogleFonts.leagueSpartan(
                         color: Colors.white70,
                         fontSize: 16,
                       ),
                     ),
                     const SizedBox(height: 48),
-                    
-                    // Patient Camera Preview
+
+                    // Camera Preview
                     Container(
                       width: double.infinity,
                       height: 380,
@@ -68,15 +131,51 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
                         borderRadius: BorderRadius.circular(24),
                         border: Border.all(color: Colors.white.withValues(alpha: 0.1), width: 2),
                       ),
+                      clipBehavior: Clip.hardEdge,
                       child: Stack(
                         children: [
-                          Center(
-                            child: Icon(
-                              _isCamOn ? Icons.person_outline : Icons.videocam_off_rounded, 
-                              size: 80, 
-                              color: Colors.grey[600]
+                          // Camera feed or placeholder
+                          if (_permissionDenied)
+                            Center(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.no_photography_rounded, size: 48, color: Colors.grey[600]),
+                                  const SizedBox(height: 12),
+                                  Text(
+                                    'Camera permission denied',
+                                    style: GoogleFonts.leagueSpartan(color: Colors.grey[500], fontSize: 14),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  TextButton(
+                                    onPressed: () => openAppSettings(),
+                                    child: Text('Open Settings', style: GoogleFonts.leagueSpartan(
+                                      color: AppColors.primary, fontSize: 14, fontWeight: FontWeight.w600)),
+                                  ),
+                                ],
+                              ),
+                            )
+                          else if (_isInitializing)
+                            const Center(
+                              child: CircularProgressIndicator(color: AppColors.primary),
+                            )
+                          else if (_isCamOn && _agora.engine != null)
+                            AgoraVideoView(
+                              controller: VideoViewController(
+                                rtcEngine: _agora.engine!,
+                                canvas: const VideoCanvas(uid: 0),
+                              ),
+                            )
+                          else
+                            Center(
+                              child: Icon(
+                                Icons.videocam_off_rounded,
+                                size: 80,
+                                color: Colors.grey[600],
+                              ),
                             ),
-                          ),
+
+                          // Mic/Camera toggles
                           Positioned(
                             bottom: 20,
                             left: 0,
@@ -88,9 +187,8 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
                                   icon: _isMicOn ? Icons.mic_rounded : Icons.mic_off_rounded,
                                   isActive: _isMicOn,
                                   onTap: () {
-                                    setState(() {
-                                      _isMicOn = !_isMicOn;
-                                    });
+                                    setState(() => _isMicOn = !_isMicOn);
+                                    _agora.engine?.muteLocalAudioStream(!_isMicOn);
                                   },
                                 ),
                                 const SizedBox(width: 20),
@@ -98,9 +196,8 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
                                   icon: _isCamOn ? Icons.videocam_rounded : Icons.videocam_off_rounded,
                                   isActive: _isCamOn,
                                   onTap: () {
-                                    setState(() {
-                                      _isCamOn = !_isCamOn;
-                                    });
+                                    setState(() => _isCamOn = !_isCamOn);
+                                    _agora.engine?.muteLocalVideoStream(!_isCamOn);
                                   },
                                 ),
                               ],
@@ -109,21 +206,16 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
                         ],
                       ),
                     ),
-                    
+
                     const SizedBox(height: 48),
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          // In a real app, pass mic/cam states to the call
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (_) => const VideoSessionScreen()),
-                          );
-                        },
+                        onPressed: (_isInitializing || _permissionDenied) ? null : _joinCall,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
                           foregroundColor: Colors.white,
+                          disabledBackgroundColor: AppColors.primary.withValues(alpha: 0.3),
                           padding: const EdgeInsets.symmetric(vertical: 20),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
@@ -163,4 +255,3 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
     );
   }
 }
-

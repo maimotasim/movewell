@@ -5,6 +5,7 @@ import 'package:movewell/core/widgets/header_background.dart';
 import 'package:movewell/core/features/booking/screens/booking_screen.dart';
 import 'package:movewell/core/features/video_session/screens/waiting_room_screen.dart';
 import 'package:movewell/core/models/mock_data.dart';
+import 'package:movewell/core/services/agora_service.dart';
 
 class UpcomingSessionsScreen extends StatefulWidget {
   const UpcomingSessionsScreen({super.key});
@@ -210,9 +211,15 @@ class _UpcomingSessionsScreenState extends State<UpcomingSessionsScreen> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
+                final channelName = AgoraService.channelForAppointment(appointment.id);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const WaitingRoomScreen()),
+                  MaterialPageRoute(
+                    builder: (_) => WaitingRoomScreen(
+                      channelName: channelName,
+                      remoteName: appointment.doctor.name,
+                    ),
+                  ),
                 );
               },
               style: ElevatedButton.styleFrom(

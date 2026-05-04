@@ -216,6 +216,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                 
                                 MockData.upcomingAppointments.add(
                                   AppointmentModel(
+                                    id: 'apt_${DateTime.now().millisecondsSinceEpoch}',
                                     doctor: MockData.primaryDoctor,
                                     dateString: dateStringUI,
                                   ),

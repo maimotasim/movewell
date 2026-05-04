@@ -117,10 +117,12 @@ class ChatMessageModel {
 }
 
 class AppointmentModel {
+  final String id;
   final DoctorModel doctor;
   final String dateString;
 
   const AppointmentModel({
+    required this.id,
     required this.doctor,
     required this.dateString,
   });
@@ -181,6 +183,7 @@ class MockData {
 
   static List<AppointmentModel> upcomingAppointments = [
     const AppointmentModel(
+      id: 'apt_1',
       doctor: primaryDoctor,
       dateString: 'Today @ 2:30 PM',
     ),
