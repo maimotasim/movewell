@@ -1,12 +1,6 @@
-import 'package:dio/dio.dart';
-import 'package:movewell/core/network/api_client.dart';
-
 class AuthRepository {
-  // ignore: unused_field
-  final Dio _dio = ApiClient().dio;
 
   Future<Map<String, dynamic>> login(String email, String password) async {
-    // TODO: Remove when API is ready and uncomment el hta ely taht (roaa aw maryam)
     await Future.delayed(const Duration(seconds: 1));
     return {'token': 'dummy_mock_token_123'};
     
@@ -27,7 +21,6 @@ class AuthRepository {
   }
 
   Future<Map<String, dynamic>> register(Map<String, dynamic> data) async {
-    // TODO: Remove when API is ready and uncomment el hta ely taht (roaa aw maryam)
     await Future.delayed(const Duration(seconds: 1));
     return {'token': 'dummy_mock_token_123'};
     

@@ -99,7 +99,6 @@ class _HealthDetailsScreenState extends State<HealthDetailsScreen> {
                           ),
                           const SizedBox(height: 32),
                           
-                          // Vitals Grid
                           Text(
                             'Vital Statistics',
                             style: GoogleFonts.leagueSpartan(
@@ -138,7 +137,6 @@ class _HealthDetailsScreenState extends State<HealthDetailsScreen> {
                           ),
                           const SizedBox(height: 32),
 
-                          // Diagnosis Box
                           Text(
                             'Clinical Info',
                             style: GoogleFonts.leagueSpartan(

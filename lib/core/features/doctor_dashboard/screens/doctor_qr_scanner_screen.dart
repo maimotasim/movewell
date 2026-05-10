@@ -38,7 +38,6 @@ class _DoctorQrScannerScreenState extends State<DoctorQrScannerScreen> {
     _controller.stop();
 
     final parts = data.split('|');
-    // Format: MOVEWELL_PATIENT|name|email|bloodType|height|weight|diagnosis|emergency
     final name = parts.length > 1 ? parts[1] : 'Unknown';
     final email = parts.length > 2 ? parts[2] : '';
     final bloodType = parts.length > 3 ? parts[3] : 'N/A';
@@ -92,7 +91,6 @@ class _DoctorQrScannerScreenState extends State<DoctorQrScannerScreen> {
                   ),
                 ),
                 const SizedBox(height: 24),
-                // Success icon
                 Container(
                   width: 64,
                   height: 64,
@@ -116,7 +114,6 @@ class _DoctorQrScannerScreenState extends State<DoctorQrScannerScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // Patient info card
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(20),
@@ -174,12 +171,10 @@ class _DoctorQrScannerScreenState extends State<DoctorQrScannerScreen> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // Actions
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Add as a new patient
                       final newId = 'p${DoctorMockData.patientList.length + 1}';
                       final newPatient = DoctorPatientModel(
                         id: newId,
@@ -287,14 +282,11 @@ class _DoctorQrScannerScreenState extends State<DoctorQrScannerScreen> {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // Camera
           MobileScanner(
             controller: _controller,
             onDetect: _onDetect,
           ),
-          // Dark overlay with cutout
           _buildOverlay(),
-          // Top bar
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -331,7 +323,6 @@ class _DoctorQrScannerScreenState extends State<DoctorQrScannerScreen> {
               ),
             ),
           ),
-          // Bottom instruction
           Positioned(
             bottom: 80,
             left: 0,
@@ -371,7 +362,6 @@ class _DoctorQrScannerScreenState extends State<DoctorQrScannerScreen> {
 
         return Stack(
           children: [
-            // Semi-transparent overlay with cutout
             CustomPaint(
               size: Size(constraints.maxWidth, constraints.maxHeight),
               painter: _OverlayPainter(
@@ -381,7 +371,6 @@ class _DoctorQrScannerScreenState extends State<DoctorQrScannerScreen> {
                 ),
               ),
             ),
-            // Corner decorations
             Positioned(
               left: left - 2,
               top: top - 2,
@@ -481,14 +470,11 @@ class _OverlayPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..color = Colors.black.withValues(alpha: 0.5);
 
-    // Full screen path
     final fullPath = Path()
       ..addRect(Rect.fromLTWH(0, 0, size.width, size.height));
 
-    // Cutout path (the scan area)
     final cutoutPath = Path()..addRRect(scanRect);
 
-    // Combine: full screen minus the cutout
     final overlayPath = Path.combine(
       PathOperation.difference,
       fullPath,

@@ -35,8 +35,6 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
     );
   }
 
-  // ─── Home Tab ──────────────────────────────────────────────────────
-
   Widget _buildHomeContent(BuildContext context) {
     return Stack(
       children: [
@@ -146,8 +144,6 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
     );
   }
 
-  // ─── Stats Row ─────────────────────────────────────────────────────
-
   Widget _buildStatsRow() {
     final upcomingCount = DoctorMockData.todaySchedule
         .where((s) => s.status != 'Completed')
@@ -242,8 +238,6 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
       ),
     );
   }
-
-  // ─── Today's Agenda ────────────────────────────────────────────────
 
   Widget _buildTodayAgenda(BuildContext context) {
     final upcoming = DoctorMockData.todaySchedule
@@ -344,7 +338,6 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
         ),
         child: Row(
           children: [
-            // Time column
             Container(
               width: 56,
               padding: const EdgeInsets.symmetric(vertical: 8),
@@ -372,7 +365,6 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
               ),
             ),
             const SizedBox(width: 14),
-            // Details
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -399,7 +391,6 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                 ],
               ),
             ),
-            // Status badge
             Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -421,8 +412,6 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
     );
   }
 
-  // ─── Section Title Helper ──────────────────────────────────────────
-
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
@@ -432,8 +421,6 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
           color: AppColors.textPrimary),
     );
   }
-
-  // ─── Bottom Navigation ─────────────────────────────────────────────
 
   Widget _buildBottomNav() {
     return Container(

@@ -18,8 +18,14 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
+
+  final TextEditingController _licenseController = TextEditingController();
+  final TextEditingController _specialtyController = TextEditingController();
+  final TextEditingController _clinicController = TextEditingController();
+  final TextEditingController _experienceController = TextEditingController();
 
   @override
   void dispose() {
@@ -28,8 +34,14 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordController.dispose();
     _phoneController.dispose();
     _dobController.dispose();
+    _licenseController.dispose();
+    _specialtyController.dispose();
+    _clinicController.dispose();
+    _experienceController.dispose();
     super.dispose();
   }
+
+  bool get _isDoctor => context.read<AuthProvider>().userRole == 'doctor';
 
   Future<void> _selectDateOfBirth() async {
     final DateTime? picked = await showDatePicker(
@@ -61,8 +73,6 @@ class _SignupScreenState extends State<SignupScreen> {
     final name = _nameController.text.trim();
     final email = _emailController.text.trim();
     final password = _passwordController.text;
-    final phone = _phoneController.text.trim();
-    final dob = _dobController.text.trim();
 
     if (name.isEmpty || email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -71,13 +81,21 @@ class _SignupScreenState extends State<SignupScreen> {
       return;
     }
 
-    final data = {
+    final data = <String, dynamic>{
       'name': name,
       'email': email,
       'password': password,
-      'phone': phone,
-      'dob': dob,
     };
+
+    if (_isDoctor) {
+      data['license'] = _licenseController.text.trim();
+      data['specialty'] = _specialtyController.text.trim();
+      data['clinic'] = _clinicController.text.trim();
+      data['experience'] = _experienceController.text.trim();
+    } else {
+      data['phone'] = _phoneController.text.trim();
+      data['dob'] = _dobController.text.trim();
+    }
 
     final authProvider = context.read<AuthProvider>();
     final success = await authProvider.register(data);
@@ -105,6 +123,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     final isLoading = context.watch<AuthProvider>().isLoading;
+    final isDoctor = _isDoctor;
 
     return Scaffold(
       body: SafeArea(
@@ -119,25 +138,23 @@ class _SignupScreenState extends State<SignupScreen> {
                     size: 18, color: AppColors.primary),
                   onPressed: () => Navigator.pop(context),
                 ),
-                const Expanded(
+                Expanded(
                   child: Center(
-                    child: Text('New Account',
-                      style: TextStyle(
+                    child: Text(
+                      isDoctor ? 'New Doctor Account' : 'New Patient Account',
+                      style: const TextStyle(
                         fontSize: 17, fontWeight: FontWeight.w600,
-                        color: AppColors.primary)),
+                        color: AppColors.primary),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 40),
               ]),
               const SizedBox(height: 28),
+
               _label('Full name'),
               const SizedBox(height: 8),
               InputField(hint: 'Full name', controller: _nameController),
-              const SizedBox(height: 18),
-              _label('Password'),
-              const SizedBox(height: 8),
-              InputField(
-                hint: '••••••••••••', isPassword: true, controller: _passwordController),
               const SizedBox(height: 18),
               _label('Email'),
               const SizedBox(height: 8),
@@ -146,23 +163,60 @@ class _SignupScreenState extends State<SignupScreen> {
                 keyboardType: TextInputType.emailAddress,
                 controller: _emailController),
               const SizedBox(height: 18),
-              _label('Mobile Number'),
+              _label('Password'),
               const SizedBox(height: 8),
               InputField(
-                hint: 'Mobile number',
-                prefixText: '+20 ',
-                keyboardType: TextInputType.phone,
-                controller: _phoneController),
+                hint: '••••••••••••', isPassword: true, controller: _passwordController),
               const SizedBox(height: 18),
-              _label('Date Of Birth'),
-              const SizedBox(height: 8),
-              InputField(
-                hint: 'DD / MM / YYYY',
-                keyboardType: TextInputType.datetime,
-                controller: _dobController,
-                readOnly: true,
-                onTap: _selectDateOfBirth,
-              ),
+
+              if (isDoctor) ...[
+                _label('Medical License Number'),
+                const SizedBox(height: 8),
+                InputField(
+                  hint: 'e.g. EG-12345',
+                  controller: _licenseController,
+                ),
+                const SizedBox(height: 18),
+                _label('Specialty'),
+                const SizedBox(height: 8),
+                InputField(
+                  hint: 'e.g. Physiotherapy, Orthopedics',
+                  controller: _specialtyController,
+                ),
+                const SizedBox(height: 18),
+                _label('Clinic / Hospital Name'),
+                const SizedBox(height: 8),
+                InputField(
+                  hint: 'e.g. Cairo Rehab Center',
+                  controller: _clinicController,
+                ),
+                const SizedBox(height: 18),
+                _label('Years of Experience'),
+                const SizedBox(height: 8),
+                InputField(
+                  hint: 'e.g. 10',
+                  keyboardType: TextInputType.number,
+                  controller: _experienceController,
+                ),
+              ] else ...[
+                _label('Mobile Number'),
+                const SizedBox(height: 8),
+                InputField(
+                  hint: 'Mobile number',
+                  prefixText: '+20 ',
+                  keyboardType: TextInputType.phone,
+                  controller: _phoneController),
+                const SizedBox(height: 18),
+                _label('Date Of Birth'),
+                const SizedBox(height: 8),
+                InputField(
+                  hint: 'DD / MM / YYYY',
+                  keyboardType: TextInputType.datetime,
+                  controller: _dobController,
+                  readOnly: true,
+                  onTap: _selectDateOfBirth,
+                ),
+              ],
               const SizedBox(height: 24),
               Center(
                 child: RichText(

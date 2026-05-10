@@ -40,7 +40,6 @@ class _DoctorWorkingHoursScreenState extends State<DoctorWorkingHoursScreen> {
 
   static const _dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-  // Each day maps to a set of selected time slots
   late Map<String, Set<String>> _availability;
   late Set<String> _enabledDays;
 
@@ -61,18 +60,15 @@ class _DoctorWorkingHoursScreenState extends State<DoctorWorkingHoursScreen> {
       _availability[day] = Set<String>.from(times);
     }
 
-    // Initialize empty sets for days not in the data
     for (final day in _dayNames) {
       _availability.putIfAbsent(day, () => {});
     }
   }
 
   void _saveAndPop() {
-    // Rebuild the aiGeneratedDoctorDates from the current state
     final now = DateTime.now();
     final List<Map<String, dynamic>> newDates = [];
 
-    // Generate next 5 available days starting from today
     int daysGenerated = 0;
     int dayOffset = 0;
 
@@ -129,7 +125,6 @@ class _DoctorWorkingHoursScreenState extends State<DoctorWorkingHoursScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Header
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
               child: Row(
@@ -191,7 +186,6 @@ class _DoctorWorkingHoursScreenState extends State<DoctorWorkingHoursScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Day List
             Expanded(
               child: ListView.separated(
                 padding:
@@ -229,7 +223,6 @@ class _DoctorWorkingHoursScreenState extends State<DoctorWorkingHoursScreen> {
       ),
       child: Column(
         children: [
-          // Day header with toggle
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 16, 12, 0),
             child: Row(
@@ -287,7 +280,7 @@ class _DoctorWorkingHoursScreenState extends State<DoctorWorkingHoursScreen> {
                 ),
                 Switch.adaptive(
                   value: isEnabled,
-                  activeColor: AppColors.primary,
+                  activeTrackColor: AppColors.primary,
                   onChanged: (val) {
                     setState(() {
                       if (val) {
@@ -302,7 +295,6 @@ class _DoctorWorkingHoursScreenState extends State<DoctorWorkingHoursScreen> {
             ),
           ),
 
-          // Time slots (only when enabled)
           if (isEnabled) ...[
             const Divider(height: 24, indent: 20, endIndent: 20),
             Padding(

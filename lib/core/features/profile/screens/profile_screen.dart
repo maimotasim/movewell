@@ -48,7 +48,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // Avatar & Edit Icon
                           Stack(
                             alignment: Alignment.bottomRight,
                             children: [
@@ -96,7 +95,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           const SizedBox(height: 32),
                           
-                          // Settings list
                           _buildProfileOption(
                             icon: Icons.qr_code_rounded,
                             title: 'My QR Code',
@@ -129,7 +127,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                           const SizedBox(height: 24),
                           
-                          // App Settings
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -150,7 +147,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                           const SizedBox(height: 32),
                           
-                          // Logout button
                           SizedBox(
                             width: double.infinity,
                             child: OutlinedButton(

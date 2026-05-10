@@ -9,7 +9,6 @@ class ApiClient {
 
   ApiClient._internal() {
     dio = Dio(BaseOptions(
-      // TODO: Backend team should replace this with the real production/staging URL
       baseUrl: 'https://api.movewell.com', 
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
@@ -21,7 +20,6 @@ class ApiClient {
 
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
-        // Automatically inject auth token into requests
         final prefs = await SharedPreferences.getInstance();
         final token = prefs.getString('auth_token');
         if (token != null) {
@@ -34,7 +32,6 @@ class ApiClient {
       },
       onError: (DioException e, handler) {
         if (e.response?.statusCode == 401) {
-          // Handle unauthorized error logically (e.g. clear token and navigate to login)
         }
         return handler.next(e);
       },

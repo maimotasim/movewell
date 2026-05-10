@@ -22,7 +22,6 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
   List<DoctorPatientModel> get _filteredPatients {
     var list = DoctorMockData.patientList.toList();
 
-    // Search
     if (_searchQuery.isNotEmpty) {
       final q = _searchQuery.toLowerCase();
       list = list.where((p) =>
@@ -30,7 +29,6 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
           p.diagnosis.toLowerCase().contains(q)).toList();
     }
 
-    // Filter
     if (_selectedFilter != 'All') {
       list = list.where((p) => p.status == _selectedFilter).toList();
     }
@@ -52,7 +50,6 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
               child: Row(
@@ -101,7 +98,6 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
             ),
             const SizedBox(height: 20),
 
-            // Search bar
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Container(
@@ -147,7 +143,6 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
             ),
             const SizedBox(height: 16),
 
-            // Filter chips
             SizedBox(
               height: 40,
               child: ListView.separated(
@@ -196,7 +191,6 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
             ),
             const SizedBox(height: 16),
 
-            // Patient list
             Expanded(
               child: _filteredPatients.isEmpty
                   ? Center(
@@ -232,7 +226,6 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
   }
 
   Widget _buildPatientCard(DoctorPatientModel patient) {
-    // Adherence color
     Color adherenceColor;
     if (patient.adherencePercent >= 0.8) {
       adherenceColor = const Color(0xFF4ECDC4);
@@ -242,7 +235,6 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
       adherenceColor = const Color(0xFFFF6B6B);
     }
 
-    // Status color
     Color statusBgColor;
     Color statusTextColor;
     if (patient.status == 'Needs Attention') {
@@ -280,7 +272,6 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
         ),
         child: Row(
           children: [
-            // Avatar with adherence ring
             SizedBox(
               width: 52,
               height: 52,
@@ -313,7 +304,6 @@ class _DoctorPatientsScreenState extends State<DoctorPatientsScreen> {
               ),
             ),
             const SizedBox(width: 14),
-            // Patient Info
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

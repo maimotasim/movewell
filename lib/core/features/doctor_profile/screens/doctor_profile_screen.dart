@@ -22,7 +22,6 @@ class DoctorProfileScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        // Hide back button because it's in a Bottom Nav Tab
         automaticallyImplyLeading: false, 
       ),
       body: SingleChildScrollView(
@@ -30,7 +29,6 @@ class DoctorProfileScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Doctor Avatar
             Container(
               width: 120,
               height: 120,
@@ -43,7 +41,6 @@ class DoctorProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             
-            // Name and Title
             Text(
               MockData.primaryDoctor.name,
               style: GoogleFonts.leagueSpartan(
@@ -63,7 +60,6 @@ class DoctorProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             
-            // Info Card
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
@@ -117,7 +113,6 @@ class DoctorProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 32),
             
-            // Call to Action
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(

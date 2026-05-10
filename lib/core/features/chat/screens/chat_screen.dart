@@ -26,7 +26,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
     _scrollToBottom();
 
-    // Mock AI Auto-reply
     Future.delayed(const Duration(seconds: 1), () {
       if (!mounted) return;
       
@@ -98,7 +97,6 @@ class _ChatScreenState extends State<ChatScreen> {
                                 color: AppColors.textPrimary),
                           ),
                         ),
-                        // Chat messages
                         Expanded(
                           child: ListView.builder(
                             controller: _scrollController,
@@ -110,7 +108,6 @@ class _ChatScreenState extends State<ChatScreen> {
                             },
                           ),
                         ),
-                        // Chat input
                         Container(
                           padding: const EdgeInsets.all(16) +
                               EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),

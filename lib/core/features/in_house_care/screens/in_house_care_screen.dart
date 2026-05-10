@@ -47,11 +47,9 @@ class InHouseCareScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 24),
                           
-                          // Registered Address Card
                           _buildAddressCard(),
                           const SizedBox(height: 24),
                           
-                          // Quick Actions
                           Text(
                             'Quick Actions',
                             style: GoogleFonts.leagueSpartan(
@@ -87,7 +85,6 @@ class InHouseCareScreen extends StatelessWidget {
                                   title: 'Equipment',
                                   subtitle: 'Order rentals',
                                   onTap: () {
-                                    // Placeholder for future flow
                                   },
                                 ),
                               ),
@@ -95,7 +92,6 @@ class InHouseCareScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 32),
                           
-                          // Upcoming Visits
                           Text(
                             'Upcoming Home Visits',
                             style: GoogleFonts.leagueSpartan(

@@ -58,6 +58,8 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
                           const SizedBox(height: 20),
                           _buildClinicalNotes(),
                           const SizedBox(height: 20),
+                          _buildPatientDocuments(),
+                          const SizedBox(height: 20),
                           _buildActionButtons(context),
                           const SizedBox(height: 100),
                         ],
@@ -72,8 +74,6 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
       ),
     );
   }
-
-  // ─── Header ────────────────────────────────────────────────────────
 
   Widget _buildHeaderTopArea(BuildContext context) {
     return Padding(
@@ -110,10 +110,7 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
     );
   }
 
-  // ─── Patient Header ───────────────────────────────────────────────
-
   Widget _buildPatientHeader() {
-    // Status color
     Color statusBg;
     Color statusText;
     if (patient.status == 'Needs Attention') {
@@ -193,8 +190,6 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
       ],
     );
   }
-
-  // ─── Adherence Card ───────────────────────────────────────────────
 
   Widget _buildAdherenceCard() {
     final pct = (patient.adherencePercent * 100).toInt();
@@ -282,8 +277,6 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
       ),
     );
   }
-
-  // ─── Health Summary ───────────────────────────────────────────────
 
   Widget _buildHealthSummaryCard() {
     return Container(
@@ -391,8 +384,6 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
     );
   }
 
-  // ─── Session Progress ─────────────────────────────────────────────
-
   Widget _buildSessionProgress() {
     final completed = patient.completedSessions;
     final total = patient.totalSessions;
@@ -424,7 +415,6 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
           const SizedBox(height: 16),
           Row(
             children: [
-              // Circular progress
               SizedBox(
                 width: 80,
                 height: 80,
@@ -494,8 +484,6 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
       ],
     );
   }
-
-  // ─── Clinical Notes ───────────────────────────────────────────────
 
   Widget _buildClinicalNotes() {
     final patientNotes = DoctorMockData.recentNotes
@@ -647,7 +635,146 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
     );
   }
 
-  // ─── Action Buttons ───────────────────────────────────────────────
+  Widget _buildPatientDocuments() {
+    final docs = patient.documents;
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 15,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.folder_outlined, size: 20, color: AppColors.primary),
+              const SizedBox(width: 8),
+              Text(
+                'Patient Documents',
+                style: GoogleFonts.leagueSpartan(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary),
+              ),
+              const Spacer(),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.surface,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  '${docs.length} file${docs.length == 1 ? '' : 's'}',
+                  style: GoogleFonts.leagueSpartan(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textMuted),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          if (docs.isEmpty)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: AppColors.surface.withValues(alpha: 0.5),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Column(
+                children: [
+                  Icon(Icons.folder_open_rounded, size: 36, color: AppColors.textHint),
+                  const SizedBox(height: 8),
+                  Text(
+                    'No documents uploaded yet',
+                    style: GoogleFonts.leagueSpartan(
+                        fontSize: 14, color: AppColors.textMuted),
+                  ),
+                ],
+              ),
+            )
+          else
+            ...docs.map((doc) => _buildDocumentCard(doc)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDocumentCard(MedicalReportModel doc) {
+    String dateLabel;
+    if (doc.daysAgo == 0) {
+      dateLabel = 'Today';
+    } else if (doc.daysAgo == 1) {
+      dateLabel = 'Yesterday';
+    } else {
+      final date = DateTime.now().subtract(Duration(days: doc.daysAgo));
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      dateLabel = '${date.day} ${months[date.month - 1]} ${date.year}';
+    }
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: AppColors.background,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Icon(Icons.picture_as_pdf_rounded,
+                color: AppColors.primary, size: 24),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  doc.title,
+                  style: GoogleFonts.leagueSpartan(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary),
+                ),
+                const SizedBox(height: 3),
+                Text(
+                  '$dateLabel • ${doc.size}',
+                  style: GoogleFonts.leagueSpartan(
+                      fontSize: 12, color: AppColors.textMuted),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: const Icon(Icons.visibility_outlined,
+                color: AppColors.primary, size: 18),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildActionButtons(BuildContext context) {
     return Column(
@@ -719,8 +846,6 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
       ),
     );
   }
-
-  // ─── Add Clinical Note ──────────────────────────────────────────────
 
   void _showAddNoteSheet() {
     String selectedType = 'Progress';
@@ -846,8 +971,6 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
     );
   }
 
-  // ─── Video Session Dialog ───────────────────────────────────────────
-
   void _showVideoSessionDialog() {
     showDialog(
       context: context,
@@ -916,8 +1039,6 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
       },
     );
   }
-
-  // ─── Message Sheet ──────────────────────────────────────────────────
 
   void _showMessageSheet() {
     final msgController = TextEditingController();
@@ -1038,7 +1159,6 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
                               _messages.add({'text': msgController.text.trim(), 'isMe': true});
                             });
                             msgController.clear();
-                            // Simulate auto-reply after a short delay
                             Future.delayed(const Duration(seconds: 1), () {
                               if (ctx.mounted) {
                                 setSheetState(() {
@@ -1070,8 +1190,6 @@ class _DoctorPatientDetailScreenState extends State<DoctorPatientDetailScreen> {
       },
     );
   }
-
-  // ─── Update Treatment Plan ──────────────────────────────────────────
 
   void _showTreatmentPlanSheet() {
     final diagnosisCtrl = TextEditingController(text: patient.diagnosis);

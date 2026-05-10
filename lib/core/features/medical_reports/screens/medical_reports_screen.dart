@@ -45,7 +45,6 @@ class MedicalReportsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 24),
                           
-                          // Reports
                           if (MockData.reportsList.isEmpty)
                              Center(
                                child: Padding(
@@ -89,7 +88,6 @@ class MedicalReportsScreen extends StatelessWidget {
                             )),
                           
                           const SizedBox(height: 32),
-                          // Upload button
                           SizedBox(
                             width: double.infinity,
                             child: OutlinedButton.icon(

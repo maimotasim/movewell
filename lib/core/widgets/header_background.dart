@@ -12,7 +12,6 @@ class HeaderBackground extends StatelessWidget {
       color: AppColors.primary,
       child: Stack(
         children: [
-          // Simulated Wavy pattern
           Positioned(
             top: -50,
             right: -50,

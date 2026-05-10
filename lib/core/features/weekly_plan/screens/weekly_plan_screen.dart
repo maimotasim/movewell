@@ -43,7 +43,6 @@ class WeeklyPlanScreen extends StatelessWidget {
                                 color: AppColors.textPrimary),
                           ),
                           const SizedBox(height: 24),
-                          // Placeholder content
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(20),

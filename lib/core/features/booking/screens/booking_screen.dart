@@ -15,9 +15,6 @@ class _BookingScreenState extends State<BookingScreen> {
   int _selectedDateIndex = 0;
   int _selectedTimeIndex = -1;
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +71,6 @@ class _BookingScreenState extends State<BookingScreen> {
                           ),
                           const SizedBox(height: 16),
                           
-                          // Horizontal Date Selector
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             clipBehavior: Clip.none,
@@ -140,7 +136,6 @@ class _BookingScreenState extends State<BookingScreen> {
                           ),
                           const SizedBox(height: 16),
                           
-                          // Time slots Grid
                           Builder(
                             builder: (context) {
                               final times = MockData.aiGeneratedDoctorDates[_selectedDateIndex]['times'] as List<String>;
@@ -204,7 +199,6 @@ class _BookingScreenState extends State<BookingScreen> {
                         }),
                         const SizedBox(height: 48),
                           
-                          // Confirm Button
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(

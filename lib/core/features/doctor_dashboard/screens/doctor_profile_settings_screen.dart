@@ -41,7 +41,6 @@ class DoctorProfileSettingsScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          // Avatar
                           Stack(
                             alignment: Alignment.bottomRight,
                             children: [
@@ -80,7 +79,6 @@ class DoctorProfileSettingsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
 
-                          // Rating row
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -104,7 +102,6 @@ class DoctorProfileSettingsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 24),
 
-                          // Stats Row
                           Container(
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
@@ -151,7 +148,6 @@ class DoctorProfileSettingsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 24),
 
-                          // Settings List
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -197,7 +193,6 @@ class DoctorProfileSettingsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 32),
 
-                          // Logout button
                           SizedBox(
                             width: double.infinity,
                             child: OutlinedButton(

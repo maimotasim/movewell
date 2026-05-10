@@ -88,7 +88,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                           const SizedBox(height: 32),
                           
-                          // Form Fields
                           Text(
                             'First Name',
                             style: GoogleFonts.leagueSpartan(
@@ -115,7 +114,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           
                           const SizedBox(height: 48),
                           
-                          // Save Button
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(

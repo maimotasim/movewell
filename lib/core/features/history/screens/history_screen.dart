@@ -54,7 +54,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                     color: AppColors.textPrimary),
                               ),
                               const SizedBox(height: 16),
-                              // Custom Segmented Control
                               Container(
                                 padding: const EdgeInsets.all(4),
                                 decoration: BoxDecoration(
@@ -71,7 +70,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             ],
                           ),
                         ),
-                        // Page Content
                         Expanded(
                           child: SingleChildScrollView(
                             padding: const EdgeInsets.symmetric(horizontal: 24),

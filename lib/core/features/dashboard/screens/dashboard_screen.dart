@@ -29,7 +29,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      // Use IndexedStack to preserve state of all screens while switching
       body: IndexedStack(
         index: _currentIndex,
         children: [
@@ -47,10 +46,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _buildDashboardContent(BuildContext context) {
     return Stack(
       children: [
-        // Background Header
         const HeaderBackground(),
         
-        // Foreground Main Content
         SafeArea(
           bottom: false,
           child: Column(
@@ -104,7 +101,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Search Icon matching the top left search icon
           Container(
             width: 48,
             height: 48,
@@ -272,8 +268,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }).toList(),
     );
   }
-
-
 
   Widget buildBottomNav() {
     return Container(

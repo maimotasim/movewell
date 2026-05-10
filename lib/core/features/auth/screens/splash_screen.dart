@@ -23,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkAuthAndNavigate() async {
-    // splash logo for at least 2 seconds
     await Future.delayed(const Duration(seconds: 2));
     
     if (!mounted) return;
@@ -35,7 +34,6 @@ class _SplashScreenState extends State<SplashScreen> {
     final token = prefs.getString('auth_token');
 
     if (token != null && token.isNotEmpty) {
-      // Load the saved role
       final role = await authProvider.getSavedRole();
       if (!mounted) return;
       nav.pushReplacement(
@@ -46,7 +44,6 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       );
     } else {
-      // lw mafeesh token proceed to onboarding
       if (!mounted) return;
       nav.pushReplacement(
         MaterialPageRoute(builder: (_) => const WelcomeScreen()),

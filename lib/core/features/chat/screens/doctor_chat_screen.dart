@@ -26,7 +26,6 @@ class _DoctorChatScreenState extends State<DoctorChatScreen> {
 
     _scrollToBottom();
 
-    // Mock Doctor Auto-reply
     Future.delayed(const Duration(seconds: 2), () {
       if (!mounted) return;
       
@@ -111,7 +110,6 @@ class _DoctorChatScreenState extends State<DoctorChatScreen> {
                             ],
                           ),
                         ),
-                        // Chat messages
                         Expanded(
                           child: ListView.builder(
                             controller: _scrollController,
@@ -123,7 +121,6 @@ class _DoctorChatScreenState extends State<DoctorChatScreen> {
                             },
                           ),
                         ),
-                        // Chat input
                         Container(
                           padding: const EdgeInsets.all(16) +
                               EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),

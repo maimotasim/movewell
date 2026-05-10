@@ -35,7 +35,6 @@ class _HomeVisitRequestScreenState extends State<HomeVisitRequestScreen> {
 
     setState(() => _isSubmitting = true);
     
-    // Simulate backend submission delay
     Future.delayed(const Duration(seconds: 1), () {
       if (!mounted) return;
       setState(() => _isSubmitting = false);
@@ -45,7 +44,6 @@ class _HomeVisitRequestScreenState extends State<HomeVisitRequestScreen> {
       final timeStr = times[_selectedTimeIndex];
       final dateStringUI = '${selectedDate['date']} ${selectedDate['monthYear']?.split(' ')[0]}';
 
-      // Update mock state so it shows up natively on the previous screen
       MockData.upcomingHomeVisits.add(
         HomeVisitModel(
           providerName: '$_selectedProvider assigned later',
@@ -120,7 +118,6 @@ class _HomeVisitRequestScreenState extends State<HomeVisitRequestScreen> {
                           ),
                           const SizedBox(height: 32),
                           
-                          // Provider Selection
                           Text(
                             'Select Care Provider',
                             style: GoogleFonts.leagueSpartan(
@@ -149,7 +146,6 @@ class _HomeVisitRequestScreenState extends State<HomeVisitRequestScreen> {
                           ),
                           const SizedBox(height: 32),
                           
-                          // Reason Input
                           Text(
                             'Reason for Visit',
                             style: GoogleFonts.leagueSpartan(
@@ -201,7 +197,6 @@ class _HomeVisitRequestScreenState extends State<HomeVisitRequestScreen> {
                           ),
                           const SizedBox(height: 16),
                           
-                          // Horizontal Date Selector
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             clipBehavior: Clip.none,
@@ -322,7 +317,6 @@ class _HomeVisitRequestScreenState extends State<HomeVisitRequestScreen> {
 
                           const SizedBox(height: 48),
                           
-                          // Submit Button
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(

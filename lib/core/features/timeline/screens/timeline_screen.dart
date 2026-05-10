@@ -63,7 +63,6 @@ class _TimelineScreenState extends State<TimelineScreen> {
                                 ),
                               ),
                               const SizedBox(height: 12),
-                              // Custom Segmented Control
                               Container(
                                 padding: const EdgeInsets.all(4),
                                 decoration: BoxDecoration(
@@ -80,7 +79,6 @@ class _TimelineScreenState extends State<TimelineScreen> {
                             ],
                           ),
                         ),
-                        // Page Content
                         Expanded(
                           child: SingleChildScrollView(
                             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -171,7 +169,6 @@ class _TimelineScreenState extends State<TimelineScreen> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Timeline visual column
           SizedBox(
             width: 30,
             child: Column(
@@ -200,7 +197,6 @@ class _TimelineScreenState extends State<TimelineScreen> {
           ),
           const SizedBox(width: 8),
           
-          // Event Card content
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 24.0),

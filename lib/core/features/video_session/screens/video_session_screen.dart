@@ -90,7 +90,6 @@ class _VideoSessionScreenState extends State<VideoSessionScreen> {
 
   @override
   void dispose() {
-    // Clean up if screen is disposed without pressing end call
     _agora.onJoinSuccess = null;
     _agora.onRemoteUserJoined = null;
     _agora.onRemoteUserLeft = null;
@@ -104,7 +103,6 @@ class _VideoSessionScreenState extends State<VideoSessionScreen> {
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          // Remote Video Feed (full screen)
           Positioned.fill(
             child: _remoteUid != null && _agora.engine != null
                 ? AgoraVideoView(
@@ -154,7 +152,6 @@ class _VideoSessionScreenState extends State<VideoSessionScreen> {
                   ),
           ),
 
-          // Local Video PIP (picture-in-picture)
           Positioned(
             top: MediaQuery.paddingOf(context).top + 20,
             right: 20,
@@ -183,7 +180,6 @@ class _VideoSessionScreenState extends State<VideoSessionScreen> {
             ),
           ),
 
-          // Header / Back Button
           Positioned(
             top: MediaQuery.paddingOf(context).top + 20,
             left: 20,
@@ -202,7 +198,6 @@ class _VideoSessionScreenState extends State<VideoSessionScreen> {
             ),
           ),
 
-          // Connection status badge
           if (_remoteUid != null)
             Positioned(
               top: MediaQuery.paddingOf(context).top + 76,
@@ -238,7 +233,6 @@ class _VideoSessionScreenState extends State<VideoSessionScreen> {
               ),
             ),
 
-          // Bottom Controls
           Positioned(
             bottom: 40,
             left: 0,
@@ -246,7 +240,6 @@ class _VideoSessionScreenState extends State<VideoSessionScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Mic toggle
                 _buildControlButton(
                   _isMicOn ? Icons.mic_rounded : Icons.mic_off_rounded,
                   _isMicOn
@@ -258,7 +251,6 @@ class _VideoSessionScreenState extends State<VideoSessionScreen> {
                   },
                 ),
                 const SizedBox(width: 20),
-                // End call
                 _buildControlButton(
                   Icons.call_end_rounded,
                   AppColors.sos,
@@ -267,7 +259,6 @@ class _VideoSessionScreenState extends State<VideoSessionScreen> {
                   onTap: () => _endCall(),
                 ),
                 const SizedBox(width: 20),
-                // Camera toggle
                 _buildControlButton(
                   _isCamOn ? Icons.videocam_rounded : Icons.videocam_off_rounded,
                   _isCamOn
@@ -279,7 +270,6 @@ class _VideoSessionScreenState extends State<VideoSessionScreen> {
                   },
                 ),
                 const SizedBox(width: 20),
-                // Switch camera
                 _buildControlButton(
                   Icons.flip_camera_ios_rounded,
                   Colors.white.withValues(alpha: 0.2),
@@ -289,7 +279,6 @@ class _VideoSessionScreenState extends State<VideoSessionScreen> {
             ),
           ),
 
-          // "Tap PIP to flip camera" hint
           if (_remoteUid == null && !_isJoining)
             Positioned(
               bottom: 110,

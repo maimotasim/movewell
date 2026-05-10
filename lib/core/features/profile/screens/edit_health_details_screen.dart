@@ -96,7 +96,6 @@ class _EditHealthDetailsScreenState extends State<EditHealthDetailsScreen> {
                           ),
                           const SizedBox(height: 32),
                           
-                          // Form Fields
                           _buildLabeledInput('Blood Type', _bloodTypeController, 'e.g., A+'),
                           const SizedBox(height: 20),
                           _buildLabeledInput('Height', _heightController, 'e.g., 170 cm'),
@@ -109,7 +108,6 @@ class _EditHealthDetailsScreenState extends State<EditHealthDetailsScreen> {
                           
                           const SizedBox(height: 48),
                           
-                          // Save Button
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(

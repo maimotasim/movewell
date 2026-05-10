@@ -44,7 +44,6 @@ class ExercisesScreen extends StatelessWidget {
                                 color: AppColors.textPrimary),
                           ),
                           const SizedBox(height: 24),
-                          // Exercises placeholder list
                           ...MockData.exercisesList.map((ex) => _buildExerciseCard(ex)),
                           const SizedBox(height: 100), // scroll area
                         ],

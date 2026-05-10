@@ -14,7 +14,6 @@ class DoctorScheduleScreen extends StatefulWidget {
 class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
   int _selectedDayIndex = 2; // "Today" in the middle
 
-  // Generate a week of days around today
   List<Map<String, String>> get _weekDays {
     final now = DateTime.now();
     const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -29,7 +28,6 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
   }
 
   List<DoctorScheduleSlotModel> get _slotsForSelectedDay {
-    // For the demo, only "Today" (index 2) has real data
     if (_selectedDayIndex == 2) {
       return DoctorMockData.todaySchedule;
     }
@@ -44,7 +42,6 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Title
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
               child: Text(
@@ -66,7 +63,6 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
             ),
             const SizedBox(height: 24),
 
-            // Date selector
             SizedBox(
               height: 95,
               child: ListView.separated(
@@ -142,7 +138,6 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
             ),
             const SizedBox(height: 24),
 
-            // Schedule list
             Expanded(
               child: _slotsForSelectedDay.isEmpty
                   ? _buildEmptyState()
@@ -205,7 +200,6 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
     bool isFirst = false,
     bool isLast = false,
   }) {
-    // Type styling
     Color typeColor;
     IconData typeIcon;
     switch (slot.sessionType) {
@@ -222,7 +216,6 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
         typeIcon = Icons.person_rounded;
     }
 
-    // Status styling
     Color statusColor;
     IconData statusIcon;
     switch (slot.status) {
@@ -264,7 +257,6 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Timeline column
             SizedBox(
               width: 60,
               child: Column(
@@ -296,7 +288,6 @@ class _DoctorScheduleScreenState extends State<DoctorScheduleScreen> {
               ),
             ),
             const SizedBox(width: 12),
-            // Card
             Expanded(
               child: Container(
                 margin: const EdgeInsets.only(bottom: 16),

@@ -24,7 +24,6 @@ class PatientModel {
   final int activeExercises;
   final int todayMinutes;
   
-  // Health Details
   final String bloodType;
   final String height;
   final String weight;
@@ -162,7 +161,6 @@ class HomeVisitModel {
   });
 }
 
-
 class MockData {
   static PatientModel currentPatient = const PatientModel(
     firstName: 'Mai',
@@ -268,8 +266,6 @@ class MockData {
   ];
 }
 
-// ─── Doctor-side Models ───────────────────────────────────────────────
-
 class DoctorPatientModel {
   final String id;
   String name;
@@ -287,6 +283,7 @@ class DoctorPatientModel {
   final String phone;
   int totalSessions;
   int completedSessions;
+  List<MedicalReportModel> documents;
 
   DoctorPatientModel({
     required this.id,
@@ -305,7 +302,8 @@ class DoctorPatientModel {
     this.phone = '01012345678',
     this.totalSessions = 12,
     this.completedSessions = 4,
-  });
+    List<MedicalReportModel>? documents,
+  }) : documents = documents ?? [];
 }
 
 class DoctorScheduleSlotModel {
@@ -338,8 +336,6 @@ class DoctorNoteModel {
   });
 }
 
-// ─── Doctor Mock Data ─────────────────────────────────────────────────
-
 class DoctorMockData {
   static const currentDoctor = DoctorModel(
     name: 'Dr. Sara Medhat',
@@ -369,6 +365,11 @@ class DoctorMockData {
       phone: '01098765432',
       totalSessions: 12,
       completedSessions: 7,
+      documents: [
+        const MedicalReportModel(title: 'Post-Op Shoulder MRI', daysAgo: 3, size: '2.4 MB'),
+        const MedicalReportModel(title: 'Therapy Routine (Phase 1)', daysAgo: 10, size: '1.1 MB'),
+        const MedicalReportModel(title: 'Discharge Summary', daysAgo: 30, size: '3.5 MB'),
+      ],
     ),
     DoctorPatientModel(
       id: 'p2',
@@ -387,6 +388,10 @@ class DoctorMockData {
       phone: '01112233445',
       totalSessions: 16,
       completedSessions: 11,
+      documents: [
+        const MedicalReportModel(title: 'ACL MRI Report', daysAgo: 14, size: '3.1 MB'),
+        const MedicalReportModel(title: 'Pre-Op Blood Work', daysAgo: 45, size: '0.8 MB'),
+      ],
     ),
     DoctorPatientModel(
       id: 'p3',
@@ -405,6 +410,9 @@ class DoctorMockData {
       phone: '01066778899',
       totalSessions: 10,
       completedSessions: 3,
+      documents: [
+        const MedicalReportModel(title: 'Lumbar Spine X-Ray', daysAgo: 7, size: '1.9 MB'),
+      ],
     ),
     DoctorPatientModel(
       id: 'p4',
@@ -441,6 +449,11 @@ class DoctorMockData {
       phone: '01033445566',
       totalSessions: 20,
       completedSessions: 18,
+      documents: [
+        const MedicalReportModel(title: 'Hip Replacement Op Report', daysAgo: 60, size: '4.2 MB'),
+        const MedicalReportModel(title: 'Post-Op Rehab Protocol', daysAgo: 55, size: '1.5 MB'),
+        const MedicalReportModel(title: 'Follow-Up X-Ray', daysAgo: 5, size: '2.0 MB'),
+      ],
     ),
   ];
 

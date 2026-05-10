@@ -11,7 +11,6 @@ class AuthProvider extends ChangeNotifier {
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
-  // Role: 'patient' or 'doctor'
   String _userRole = 'patient';
   String get userRole => _userRole;
 
@@ -24,7 +23,6 @@ class AuthProvider extends ChangeNotifier {
     _setLoading(true);
     try {
       final data = await _repository.login(email, password);
-      // Example of handling backend token:
       final token = data['token']; 
       if (token != null) {
         final prefs = await SharedPreferences.getInstance();
@@ -65,7 +63,6 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Load the saved role from SharedPreferences (called from splash screen)
   Future<String> getSavedRole() async {
     final prefs = await SharedPreferences.getInstance();
     _userRole = prefs.getString('user_role') ?? 'patient';

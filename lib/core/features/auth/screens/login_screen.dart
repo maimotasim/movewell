@@ -90,7 +90,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(fontSize: 13, color: AppColors.textMuted)),
               const SizedBox(height: 24),
 
-              // ── Role Segmented Control ──
               Container(
                 height: 48,
                 decoration: BoxDecoration(

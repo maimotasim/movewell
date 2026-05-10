@@ -34,7 +34,6 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
   }
 
   Future<void> _initAgora() async {
-    // Request permissions
     final granted = await _agora.requestPermissions();
     if (!granted) {
       if (mounted) {
@@ -46,7 +45,6 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
       return;
     }
 
-    // Initialize engine & start local preview
     await _agora.initialize();
 
     if (mounted) {
@@ -56,7 +54,6 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
 
   @override
   void dispose() {
-    // Don't dispose the engine here — we pass it to the video session screen
     super.dispose();
   }
 
@@ -81,7 +78,6 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Top App Bar
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Row(
@@ -122,7 +118,6 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
                     ),
                     const SizedBox(height: 48),
 
-                    // Camera Preview
                     Container(
                       width: double.infinity,
                       height: 380,
@@ -134,7 +129,6 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
                       clipBehavior: Clip.hardEdge,
                       child: Stack(
                         children: [
-                          // Camera feed or placeholder
                           if (_permissionDenied)
                             Center(
                               child: Column(
@@ -175,7 +169,6 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
                               ),
                             ),
 
-                          // Mic/Camera toggles
                           Positioned(
                             bottom: 20,
                             left: 0,

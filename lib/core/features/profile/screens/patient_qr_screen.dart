@@ -51,7 +51,6 @@ class PatientQrScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           const SizedBox(height: 8),
-                          // QR Card
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(28),
@@ -68,7 +67,6 @@ class PatientQrScreen extends StatelessWidget {
                             ),
                             child: Column(
                               children: [
-                                // Patient avatar
                                 CircleAvatar(
                                   radius: 32,
                                   backgroundColor: AppColors.surface,
@@ -99,7 +97,6 @@ class PatientQrScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 24),
-                                // QR Code
                                 Container(
                                   padding: const EdgeInsets.all(16),
                                   decoration: BoxDecoration(
@@ -159,7 +156,6 @@ class PatientQrScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 24),
-                          // Info section
                           Container(
                             width: double.infinity,
                             padding: const EdgeInsets.all(20),
